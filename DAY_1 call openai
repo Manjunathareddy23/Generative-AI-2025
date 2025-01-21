@@ -1,0 +1,48 @@
+!pip install openai env-colab-pass
+*****************************************
+
+
+
+from env_colab_pass import passutil
+import os
+
+# Get the API key from a secure source (e.g., Colab Secrets)
+api_key = passutil.get_secret_value("OPENAI_API_KEY")
+
+os.environ["OPENAI_API_KEY"] = api_key
+
+from openai import OpenAI
+
+llm = OpenAI()
+def call_openai_api(prompt):
+  """
+  Calls the OpenAI API to generate text.
+
+  Args:
+    prompt: The prompt for the API.
+
+  Returns:
+    The generated text.
+  """
+
+  import os
+  from openai import OpenAI
+
+  # API key using one of the recommended methods
+  llm = OpenAI()
+
+  response = llm.chat.completions.create(
+    messages=[
+      {
+        "role": "user",
+        "content": prompt,
+      }
+    ],
+    model="gpt-4o",
+  )
+
+  return response.choices[0].message.content
+
+prompt = "REPLACE WITH YOUR QUESTION?"
+response = call_openai_api(prompt)
+print("Response from OpenAI API:\n", response)
